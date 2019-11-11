@@ -1,17 +1,10 @@
 version: '3.1'
 services:
-  mysql-server:
+  client:
     image: mysql:latest
-    container_name: mysql-server
-    command: --default-authentication-plugin=mysql_native_password
+    command: mysql -h mysql-server -u root -p
     volumes:
-      - db-data/:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: docker # User: root
-    ports:
-     - 3306:3306
-volumes:
-  db-data:
+     - ${PWD_FOLDER}:/host
 networks:
   default:
     external:
@@ -19,3 +12,5 @@ networks:
 
 # CLI Access:
 # docker-compose run --rm mysql-server mysql -h mysql-server -u root -p
+# PWD_FOLDER=[script folder here] docker-compose -f client-docker-compose.yml run client
+# from mysql >  source ./host/[script_file.sql]
