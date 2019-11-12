@@ -49,11 +49,11 @@ function purchasePrompt() {
     ]).then(function (answers) {
         const quantityNeeded = answers.Quantity;
         const requestedID = answers.ID;
-        pruchaseOrder(requestedID, quantityNeeded);
+        purchaseOrder(requestedID, quantityNeeded);
     });
 };
 
-function pruchaseOrder(ID, neededAmount) {
+function purchaseOrder(ID, neededAmount) {
     connection.query("Select * FROM products WHERE item_id = " + ID, function (err, res) {
         if (err) {
             console.log(err)
@@ -62,7 +62,7 @@ function pruchaseOrder(ID, neededAmount) {
             const totalCost = res[0].price * neededAmount;
             console.log("transaction completed successfully");
             console.log("Total cost" + neededAmount + " " + res[0].product_name + " is " + totalCost);
-            connection.query("Updating products SET stock_quantity = stock_quantity - " + neededAmount + "where item_id=" + ID);
+            connection.query("Update products SET stock_quantity = stock_quantity - " + neededAmount + " where item_id=" + ID);
         } else {
             console.log(" unable to process your request, not enough items");
         }
